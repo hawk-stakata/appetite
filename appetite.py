@@ -1,14 +1,16 @@
 guest_name = input("\nHi, welcome to Appetite. Can I have your name please? ")
 party_size = int(input(f"\nThanks {guest_name}, and how many in your party? "))
+
 menu = {
     "drinks": ["Water", "Coffee", "Tea", "Mimosa", "Bloody Mary", "Juice", "Soda"],
     "appetizers": ["Tots", "Chips n Salsa", "Cheese Plate", "Buffalo Wings", "Poke Nachos"],
     "mains": ["Breakfast Burrito", "Breakfast Sandwich", "French Toast", "Eggs Benedict", "Waffles"],
     "desserts": ["Cake", "Ice Cream", "Creme-brulee", "Brownies"]
 }
+
 drink_order = []
 appetizer_order = []
-food_order = []
+main_order = []
 dessert_order = []
 order = {}
 
@@ -22,33 +24,11 @@ def greet_guests():
     else:
         print(f"Ok great! {guest_name} and {guest_name}'s entourage please follow me\n")
 
-# def show_drink_menu():
-#     print("Here's our drink menu:")
-#     # Print drink menu
-#     for x in menu["drinks"]:
-#         print(x)
-#
-# def show_appetizers():
-#     for x in menu["appetizers"]:
-#         print(x)
-#
-# def show_mains():
-#     for x in menu["mains"]:
-#         print(x)
 
 def show_menu(type):
     print(f"Here's our {type} menu")
     for item in menu[type]:
         print(item)
-
-
-def validate_drink_order():
-    global guest_drink
-    if guest_drink in menu["drinks"]:
-        print("Ok got it")
-    else:
-        while guest_drink not in menu["drinks"]:
-            guest_drink = input("Sorry, we don't have that. Can I get you something else? ")
 
 def validate_order(type):
     global guest_input
@@ -58,52 +38,67 @@ def validate_order(type):
         while guest_input not in menu[type]:
             guest_input = input("Sorry, we don't have that. Can I get you something else? ")
 
-def take_drink_order():
-# def take_drink_order():
+def append_item(type):
+    global append_to_order
+    append_to_order = ""
+    if type == "drinks":
+        append_to_order = drink_order
+    elif type == "appetizers":
+        append_to_order = appetizer_order
+    elif type == "mains":
+        append_to_order = main_order
+    elif type == "dessert":
+        append_to_order = dessert_order
+
+def print_order(type):
+    global order_to_print
+    order_to_print = ""
+    if type == "drinks":
+        order_to_print = drink_order
+    elif type == "appetizers":
+        order_to_print = appetizer_order
+    elif type == "mains":
+        order_to_print = main_order
+    elif type == "dessert":
+        order_to_print = dessert_order
+    print("\nOk that's: ")
+    for items in order_to_print:
+        print(items)
+    print("One moment please")
+    for num in range(0,3):
+        print("...")
+
+
+def take_order(type):
     # Declare global variables
-    global drink_order
     global menu
-    global guest_drink
     global guest_input
-    # Ask if guests want drinks
-    want_drinks = input("Can I start you off with some drinks? (yes/no): ")
-    if want_drinks == "yes":
-        # Print drink menu
-        show_menu("drinks")
-        # Take drink order
-        # guest_drink = input("\nWhat would you like? ")
+    global append_to_order
+    # Ask if guests want to order
+    want_to_order = input(f"Can I get you some {type}? (yes/no): ")
+    if want_to_order == "yes":
+        show_menu(type)
+        # Take order
         guest_input = input("\nWhat would you like? ")
-        # Validate drink order
-        # validate_drink_order()
-        validate_order("drinks")
-        # Append drink to drink order
-        # drink_order.append(guest_drink)
-        drink_order.append(guest_input)
-        # Ask for any other drinks
-        # guest_drink = input("Anything else? ")
+        # Validate order
+        validate_order(type)
+        # Append item to order type var
+        append_item(type)
+        append_to_order.append(guest_input)
+        # Ask for any additional items
         guest_input = input("Anything else? ")
         # Loop through appending drinks until guests are done ordering
-        # while guest_drink != "no":
-        #     validate_drink_order()
-        #     drink_order.append(guest_drink)
-        #     guest_drink = input("Anything else? ")
-
         while guest_input != "no":
-            validate_order("drinks")
+            validate_order(type)
             drink_order.append(guest_input)
             guest_input = input("Anything else? ")
-        # Print drink order
-        print("Ok that's: ")
-        for x in drink_order:
-            print(x)
-        print("I'll be right back with those drinks")
-        for num in range(0,3):
-            print("...")
+        # Print order
+        print_order(type)
     else:
-        print("Ok nothing to drink")
+        print(f"Ok no {type}")
 
 def bring_order(type):
-    print("Ok here's your order: \n")
+    print("Ok here's your order:")
     if type == "drinks":
         for x in drink_order:
             print(x)
@@ -117,35 +112,7 @@ def bring_order(type):
         for x in dessert_order:
             print(x)
 
-
-
 greet_guests()
-take_drink_order()
+take_order("drinks")
 if len(drink_order) >= 1:
     bring_order("drinks")
-
-
-
-
-
-
-
-
-
-
-
-
-# Our mimosa and omelette vars are arrays
-mimosa = ["champagne", "orange juice"]
-omelette = ["eggs", "bacon", "cheese"]
-
-# Arrays can also look like this
-bloody_mary = [
-    "vodka",
-    "tomato juice",
-    "lemon",
-    "salt",
-    "pepper",
-    "worcestershire",
-    "tabasco"
-]
