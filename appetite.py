@@ -42,13 +42,19 @@ def append_item(type):
     global append_to_order
     append_to_order = ""
     if type == "drinks":
+        # add to type_order var
         append_to_order = drink_order
+        # add to total order object
+        order["drinks"] = drink_order
     elif type == "appetizers":
         append_to_order = appetizer_order
+        order["appetizers"] = appetizer_order
     elif type == "mains":
         append_to_order = main_order
-    elif type == "dessert":
+        order["mains"] = main_order
+    elif type == "desserts":
         append_to_order = dessert_order
+        order["desserts"] = dessert_order
 
 def print_order(type):
     global order_to_print
@@ -59,14 +65,11 @@ def print_order(type):
         order_to_print = appetizer_order
     elif type == "mains":
         order_to_print = main_order
-    elif type == "dessert":
+    elif type == "desserts":
         order_to_print = dessert_order
     print("\nOk that's: ")
     for items in order_to_print:
         print(items)
-    print("One moment please")
-    for num in range(0,3):
-        print("...")
 
 
 def take_order(type):
@@ -90,14 +93,17 @@ def take_order(type):
         # Loop through appending drinks until guests are done ordering
         while guest_input != "no":
             validate_order(type)
-            drink_order.append(guest_input)
+            append_to_order.append(guest_input)
             guest_input = input("Anything else? ")
         # Print order
         print_order(type)
     else:
-        print(f"Ok no {type}")
+        print(f"Ok no {type} \n")
 
 def bring_order(type):
+    print("One moment please")
+    for num in range(0,3):
+        print("...")
     print("Ok here's your order:")
     if type == "drinks":
         for x in drink_order:
@@ -111,8 +117,29 @@ def bring_order(type):
     elif type == "desserts":
         for x in dessert_order:
             print(x)
+    print("\n")
 
 greet_guests()
+
 take_order("drinks")
 if len(drink_order) >= 1:
     bring_order("drinks")
+
+take_order("appetizers")
+if len(appetizer_order) >= 1:
+    bring_order("appetizers")
+
+take_order("mains")
+if len(main_order) >= 1:
+    bring_order("mains")
+
+take_order("desserts")
+if len(dessert_order) >= 1:
+    bring_order("desserts")
+
+print("It's been a pleasure serving you today, I hope you enjoyed your meal. Let's close out.\nYou had: ")
+print("Drinks: " + str(drink_order))
+print("Apps: " + str(appetizer_order))
+print("Mains: " + str(main_order))
+print("Desserts: " + str(dessert_order))
+print("\nYour total for this hip bougie SF brunch would normally be $900, but lucky for you the owner says this one is on the house. \nSee you next time!")
