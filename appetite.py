@@ -35,7 +35,7 @@ def validate_order(type):
     if guest_input in menu[type]:
         print("Ok got it")
     else:
-        while guest_input not in menu[type]:
+        while guest_input not in menu[type] and guest_input.lower() != "no":
             guest_input = input("Sorry, we don't have that. Can I get you something else? ")
 
 def append_item(type):
@@ -83,18 +83,12 @@ def take_order(type):
         show_menu(type)
         # Take order
         guest_input = input("\nWhat would you like? ")
-        # Validate order
-        validate_order(type)
-        # Append item to order type var
-        append_item(type)
-        append_to_order.append(guest_input)
-        # Ask for any additional items
-        guest_input = input("Anything else? ")
-        # Loop through appending drinks until guests are done ordering
-        while guest_input != "no":
+        while guest_input.lower() != "no":
             validate_order(type)
-            append_to_order.append(guest_input)
-            guest_input = input("Anything else? ")
+            if guest_input.lower() != "no":
+                append_item(type)
+                append_to_order.append(guest_input)
+                guest_input = input("Anything else? ")
         # Print order
         print_order(type)
     else:
@@ -138,8 +132,12 @@ if len(dessert_order) >= 1:
     bring_order("desserts")
 
 print("It's been a pleasure serving you today, I hope you enjoyed your meal. Let's close out.\nYou had: ")
-print("Drinks: " + str(drink_order))
-print("Apps: " + str(appetizer_order))
-print("Mains: " + str(main_order))
-print("Desserts: " + str(dessert_order))
+if len(drink_order) >= 1:
+    print("Drinks: " + str(drink_order))
+if len(appetizer_order) >= 1:
+    print("Apps: " + str(appetizer_order))
+if len(main_order) >= 1:
+    print("Mains: " + str(main_order))
+if len(dessert_order) >= 1:
+    print("Desserts: " + str(dessert_order))
 print("\nYour total for this hip bougie SF brunch would normally be $900, but lucky for you the owner says this one is on the house. \nSee you next time!")
