@@ -1,3 +1,6 @@
+# Python program designed to educate non-devs about programming concepts by simulating a restaurant.
+# Note - this is meant to be primarily educational and simple, not necessarily to be the best possible working version of the app
+
 guest_name = input("\nHi, welcome to Appetite. Can I have your name please? ")
 party_size = int(input(f"\nThanks {guest_name}, and how many in your party? "))
 
@@ -67,7 +70,7 @@ def print_order(type):
         order_to_print = main_order
     elif type == "desserts":
         order_to_print = dessert_order
-    print("\nOk that's: ")
+    print("\n\nOk that's: ")
     for items in order_to_print:
         print(items)
 
@@ -88,7 +91,7 @@ def take_order(type):
             if guest_input.lower() != "no":
                 append_item(type)
                 append_to_order.append(guest_input)
-                guest_input = input("Anything else? ")
+                guest_input = input("\nAnything else? ")
         # Print order
         print_order(type)
     else:
@@ -96,7 +99,7 @@ def take_order(type):
 
 def bring_order(type):
     print("One moment please")
-    for num in range(0,3):
+    for num in range(0,5):
         print("...")
     print("Ok here's your order:")
     if type == "drinks":
@@ -140,4 +143,4 @@ if len(main_order) >= 1:
     print("Mains: " + str(main_order))
 if len(dessert_order) >= 1:
     print("Desserts: " + str(dessert_order))
-print("\nYour total for this hip bougie SF brunch would normally be $900, but lucky for you the owner says this one is on the house. \nSee you next time!")
+print("\nYour total for this hip bougie SF brunch would normally be $1000, \nbut lucky for you the owner says this one is on the house. \nSee you next time!")
